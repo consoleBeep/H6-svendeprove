@@ -34,7 +34,7 @@ class MemorialPageController extends Controller
             'full_name' => ['required', 'string', 'max:255'],
             'birth_date' => ['nullable', 'date'],
             'birth_place' => ['nullable', 'string', 'max:255'],
-            'death_date' => ['nullable', 'date'],
+            'death_date' => ['nullable', 'date', 'after_or_equal:birth_date'],
             'death_place' => ['nullable', 'string', 'max:255'],
             'grave_location' => ['nullable', 'string', 'max:255'],
             'life_story' => ['nullable', 'string'],
