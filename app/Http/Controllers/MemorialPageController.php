@@ -11,7 +11,15 @@ class MemorialPageController extends Controller
 {
     public function show(MemorialPage $memorialPage): View
     {
-        return view('memorial-pages.show', ['memorialPage' => $memorialPage]);
+        $memories = $memorialPage->memories()
+            ->with('user')
+            ->paginate(5, pageName: 'minder')
+            ->withQueryString();
+
+        return view('memorial-pages.show', [
+            'memorialPage' => $memorialPage,
+            'memories' => $memories,
+        ]);
     }
 
     public function create(): View
