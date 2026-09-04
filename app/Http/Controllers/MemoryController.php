@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Memory;
 use App\Models\MemorialPage;
+use App\Models\Memory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -19,7 +19,6 @@ class MemoryController extends Controller
             'memory' => $memory,
         ]);
     }
-
 
     public function store(Request $request, MemorialPage $memorialPage): RedirectResponse
     {
