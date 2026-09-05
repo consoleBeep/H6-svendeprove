@@ -32,7 +32,7 @@ class CommentController extends Controller
         $comment->delete();
 
         return redirect()
-            ->route('memorial-pages.memories.show', $memory)
+            ->route('memorial-pages.memories.show', [$memory->memorial_page_id, $memory])
             ->with('status', 'Kommentaren er slettet.');
     }
 }
