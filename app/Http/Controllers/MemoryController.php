@@ -14,9 +14,12 @@ class MemoryController extends Controller
     {
         $memory->load(['user', 'memorialPage']);
 
+        $comments = $memory->comments()->with('user')->paginate(10);
+
         return view('memories.show', [
             'memorialPage' => $memorialPage,
             'memory' => $memory,
+            'comments' => $comments,
         ]);
     }
 
