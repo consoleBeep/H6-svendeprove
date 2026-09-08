@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\MemorialPage;
+use App\Models\Photo;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PhotoController extends Controller
 {
@@ -27,5 +29,17 @@ class PhotoController extends Controller
         return redirect()
             ->route('memorial-pages.show', $memorialPage)
             ->with('status', 'Billedet er tilføjet.');
+    }
+
+    public function destroy(Photo $photo): RedirectResponse
+    {
+        $this->authorize('delete', $photo);
+
+        Storage::disk('public')->delete($photo->path);
+        $photo->delete();
+
+        return redirect()
+            ->route('memorial-pages.show', $photo->memorial_page_id)
+            ->with('status', 'Billedet er fjernet.');
     }
 }

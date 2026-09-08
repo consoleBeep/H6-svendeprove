@@ -28,6 +28,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
 
     Route::post('memorial-pages/{memorialPage}/photos', [PhotoController::class, 'store'])->name('memorial-pages.photos.store');
+    Route::delete('photos/{photo}', [PhotoController::class, 'destroy'])->name('photos.destroy');
 });
 
 require __DIR__.'/auth.php';

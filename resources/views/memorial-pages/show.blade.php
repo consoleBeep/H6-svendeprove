@@ -81,7 +81,18 @@
 
                 <div class="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3">
                     @forelse ($photos as $photo)
-                        <img src="{{ $photo->url }}" alt="{{ $photo->caption }}" class="aspect-square w-full rounded-lg object-cover">
+                        <div class="group relative">
+                            <img src="{{ $photo->url }}" alt="{{ $photo->caption }}" class="aspect-square w-full rounded-lg object-cover">
+
+                            @can('delete', $photo)
+                                <form method="POST" action="{{ route('photos.destroy', $photo) }}" class="absolute right-1 top-1"
+                                      onsubmit="return confirm('Slet dette billede?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="rounded-full bg-black/60 px-2 py-1 text-xs text-white">Slet</button>
+                                </form>
+                            @endcan
+                        </div>
                     @empty
                         <p class="col-span-full text-sm text-gray-500">Der er endnu ikke delt nogen billeder.</p>
                     @endforelse
