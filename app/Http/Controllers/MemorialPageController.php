@@ -16,9 +16,14 @@ class MemorialPageController extends Controller
             ->paginate(5, pageName: 'minder')
             ->withQueryString();
 
+        $photos = $memorialPage->photos()
+            ->paginate(12, pageName: 'billeder')
+            ->withQueryString();
+
         return view('memorial-pages.show', [
             'memorialPage' => $memorialPage,
             'memories' => $memories,
+            'photos' => $photos,
         ]);
     }
 

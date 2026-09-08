@@ -61,6 +61,34 @@
 
                 {{ $memories->links() }}
             </div>
+
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
+                <h3 class="font-semibold text-gray-800">Billeder</h3>
+
+                @auth
+                    <form method="POST" action="{{ route('memorial-pages.photos.store', $memorialPage) }}" enctype="multipart/form-data" class="mt-4">
+                        @csrf
+                        <input type="file" name="photo" accept="image/*" required class="block w-full text-sm text-gray-600">
+                        <x-input-error :messages="$errors->get('photo')" class="mt-2" />
+
+                        <x-input-label for="caption" value="Billedtekst" class="mt-3" />
+                        <x-text-input id="caption" name="caption" type="text" class="mt-1 block w-full" :value="old('caption')" />
+                        <x-input-error :messages="$errors->get('caption')" class="mt-2" />
+
+                        <x-primary-button class="mt-4">Upload billede</x-primary-button>
+                    </form>
+                @endauth
+
+                <div class="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3">
+                    @forelse ($photos as $photo)
+                        <img src="{{ $photo->url }}" alt="{{ $photo->caption }}" class="aspect-square w-full rounded-lg object-cover">
+                    @empty
+                        <p class="col-span-full text-sm text-gray-500">Der er endnu ikke delt nogen billeder.</p>
+                    @endforelse
+                </div>
+
+                {{ $photos->links() }}
+            </div>
         </div>
     </div>
 </x-app-layout>
