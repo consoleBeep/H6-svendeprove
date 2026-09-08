@@ -11,7 +11,7 @@ class PhotoController extends Controller
     public function store(Request $request, MemorialPage $memorialPage): RedirectResponse
     {
         $data = $request->validate([
-            'photo' => ['required', 'image'],
+            'photo' => ['required', 'image', 'max:5120'],
             'caption' => ['nullable', 'string', 'max:255'],
         ]);
 
