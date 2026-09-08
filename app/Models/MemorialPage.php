@@ -39,4 +39,9 @@ class MemorialPage extends Model
     {
         return $this->hasMany(Memory::class)->latest();
     }
+
+    public function photos(): HasMany
+    {
+        return $this->hasMany(Photo::class)->latest();
+    }
 }

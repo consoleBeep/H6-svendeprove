@@ -3,6 +3,7 @@
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\MemorialPageController;
 use App\Http\Controllers\MemoryController;
+use App\Http\Controllers\PhotoController;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome');
@@ -25,6 +26,8 @@ Route::middleware('auth')->group(function () {
 
     Route::post('memories/{memory}/comments', [CommentController::class, 'store'])->name('memories.comments.store');
     Route::delete('comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
+
+    Route::post('memorial-pages/{memorialPage}/photos', [PhotoController::class, 'store'])->name('memorial-pages.photos.store');
 });
 
 require __DIR__.'/auth.php';
