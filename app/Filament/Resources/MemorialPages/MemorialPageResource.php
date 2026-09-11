@@ -5,7 +5,6 @@ namespace App\Filament\Resources\MemorialPages;
 use App\Filament\Resources\MemorialPages\Pages\CreateMemorialPage;
 use App\Filament\Resources\MemorialPages\Pages\EditMemorialPage;
 use App\Filament\Resources\MemorialPages\Pages\ListMemorialPages;
-use App\Filament\Resources\MemorialPages\RelationManagers\PhotosRelationManager;
 use App\Filament\Resources\MemorialPages\Schemas\MemorialPageForm;
 use App\Filament\Resources\MemorialPages\Tables\MemorialPagesTable;
 use App\Models\MemorialPage;
@@ -34,7 +33,7 @@ class MemorialPageResource extends Resource
     public static function getRelations(): array
     {
         return [
-            PhotosRelationManager::class,
+            //
         ];
     }
 
