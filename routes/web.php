@@ -4,6 +4,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\MemorialPageController;
 use App\Http\Controllers\MemoryController;
 use App\Http\Controllers\PhotoController;
+use App\Http\Controllers\QrCodeController;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome');
@@ -29,6 +30,10 @@ Route::middleware('auth')->group(function () {
 
     Route::post('memorial-pages/{memorialPage}/photos', [PhotoController::class, 'store'])->name('memorial-pages.photos.store');
     Route::delete('photos/{photo}', [PhotoController::class, 'destroy'])->name('photos.destroy');
+
+    Route::get('memorial-pages/{memorialPage}/qr', [QrCodeController::class, 'show'])->name('memorial-pages.qr.show');
+    Route::get('memorial-pages/{memorialPage}/qr.svg', [QrCodeController::class, 'svg'])->name('memorial-pages.qr.svg');
+    Route::get('memorial-pages/{memorialPage}/qr.png', [QrCodeController::class, 'png'])->name('memorial-pages.qr.png');
 });
 
 require __DIR__.'/auth.php';
