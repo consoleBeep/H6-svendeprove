@@ -8,7 +8,7 @@ use App\Http\Controllers\QrCodeController;
 use App\Livewire\Actions\Logout;
 use Illuminate\Support\Facades\Route;
 
-Route::view('/', 'welcome');
+Route::view('/', 'home')->name('home');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])

@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Storage;
 
 class MemorialPage extends Model
 {
@@ -28,6 +31,38 @@ class MemorialPage extends Model
             'birth_date' => 'date',
             'death_date' => 'date',
         ];
+    }
+
+    protected function portraitUrl(): Attribute
+    {
+        return Attribute::get(fn (): ?string => $this->profile_photo_path
+            ? Storage::disk('public')->url($this->profile_photo_path)
+            : null);
+    }
+
+    protected function lifespan(): Attribute
+    {
+        return Attribute::get(function (): ?string {
+            $birthYear = $this->birth_date?->format('Y');
+            $deathYear = $this->death_date?->format('Y');
+
+            return match (true) {
+                $birthYear && $deathYear => "{$birthYear}–{$deathYear}",
+                default => $birthYear ?? $deathYear,
+            };
+        });
+    }
+
+    // raw LOWER()/LIKE so this behaves the same on sqlite (tests) and postgres (prod)
+    public function scopeSearch(Builder $query, ?string $term): Builder
+    {
+        $term = trim((string) $term);
+
+        if ($term === '') {
+            return $query;
+        }
+
+        return $query->whereRaw('lower(full_name) like ?', ['%'.mb_strtolower($term).'%']);
     }
 
     public function user(): BelongsTo
