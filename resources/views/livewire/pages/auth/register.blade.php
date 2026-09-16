@@ -15,6 +15,15 @@ new #[Layout('layouts.guest')] class extends Component
     public string $password = '';
     public string $password_confirmation = '';
 
+    public function mount(): void
+    {
+        $redirect = (string) request()->query('redirect', '');
+
+        if (str_starts_with($redirect, '/') && ! str_starts_with($redirect, '//')) {
+            session(['url.intended' => $redirect]);
+        }
+    }
+
     /**
      * Handle an incoming registration request.
      */
@@ -32,7 +41,7 @@ new #[Layout('layouts.guest')] class extends Component
 
         Auth::login($user);
 
-        $this->redirect(route('dashboard', absolute: false), navigate: true);
+        $this->redirectIntended(default: route('dashboard', absolute: false), navigate: true);
     }
 }; ?>
 
@@ -40,21 +49,21 @@ new #[Layout('layouts.guest')] class extends Component
     <form wire:submit="register">
         <!-- Name -->
         <div>
-            <x-input-label for="name" :value="__('Name')" />
+            <x-input-label for="name" value="Navn" />
             <x-text-input wire:model="name" id="name" class="block mt-1 w-full" type="text" name="name" required autofocus autocomplete="name" />
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
 
         <!-- Email Address -->
         <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
+            <x-input-label for="email" value="E-mail" />
             <x-text-input wire:model="email" id="email" class="block mt-1 w-full" type="email" name="email" required autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
         <!-- Password -->
         <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+            <x-input-label for="password" value="Adgangskode" />
 
             <x-text-input wire:model="password" id="password" class="block mt-1 w-full"
                             type="password"
@@ -66,7 +75,7 @@ new #[Layout('layouts.guest')] class extends Component
 
         <!-- Confirm Password -->
         <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
+            <x-input-label for="password_confirmation" value="Bekræft adgangskode" />
 
             <x-text-input wire:model="password_confirmation" id="password_confirmation" class="block mt-1 w-full"
                             type="password"
@@ -76,12 +85,13 @@ new #[Layout('layouts.guest')] class extends Component
         </div>
 
         <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}" wire:navigate>
-                {{ __('Already registered?') }}
+            <a class="rounded-md text-sm text-nord-3 underline hover:text-nord-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-nord-10"
+               href="{{ route('login', request()->query('redirect') ? ['redirect' => request()->query('redirect')] : []) }}" wire:navigate>
+                Allerede registreret?
             </a>
 
             <x-primary-button class="ms-4">
-                {{ __('Register') }}
+                Opret bruger
             </x-primary-button>
         </div>
     </form>
