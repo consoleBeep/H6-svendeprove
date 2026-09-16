@@ -5,6 +5,7 @@ use App\Http\Controllers\MemorialPageController;
 use App\Http\Controllers\MemoryController;
 use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\QrCodeController;
+use App\Livewire\Actions\Logout;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome');
@@ -16,6 +17,12 @@ Route::view('dashboard', 'dashboard')
 Route::view('profile', 'profile')
     ->middleware(['auth'])
     ->name('profile');
+
+Route::post('logout', function (Logout $logout) {
+    $logout();
+
+    return redirect('/');
+})->middleware('auth')->name('logout');
 
 Route::middleware('auth')->group(function () {
     Route::get('memorial-pages/create', [MemorialPageController::class, 'create'])->name('memorial-pages.create');
