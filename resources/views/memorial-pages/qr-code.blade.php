@@ -1,27 +1,50 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            QR-kode &mdash; {{ $memorialPage->full_name }}
-        </h2>
-    </x-slot>
+<x-layouts.public :title="'QR-kode — '.$memorialPage->full_name">
+    <div class="print:hidden">
+        <a href="{{ route('memorial-pages.show', $memorialPage) }}"
+           class="inline-flex items-center gap-1.5 text-sm font-medium text-nord-3 transition hover:text-nord-1">
+            <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 0 1 0 1.06L9.06 10l3.73 3.71a.75.75 0 1 1-1.06 1.06l-4.25-4.24a.75.75 0 0 1 0-1.06l4.25-4.24a.75.75 0 0 1 1.06 0Z" clip-rule="evenodd"/></svg>
+            {{ $memorialPage->full_name }}
+        </a>
 
-    <div class="py-12">
-        <div class="max-w-md mx-auto sm:px-6 lg:px-8">
-            <a href="{{ route('memorial-pages.show', $memorialPage) }}" class="text-sm text-gray-500 hover:text-gray-700">&larr; {{ $memorialPage->full_name }}</a>
-
-            <div class="mt-4 bg-white overflow-hidden shadow-sm sm:rounded-lg p-8 text-center">
-                <img src="{{ route('memorial-pages.qr.svg', $memorialPage) }}"
-                     alt="QR-kode til {{ $memorialPage->full_name }}s mindeside"
-                     class="mx-auto h-48 w-48">
-
-                <p class="mt-4 font-semibold text-gray-800">{{ $memorialPage->full_name }}</p>
-                <p class="mt-2 text-xs text-gray-500 break-all">{{ $url }}</p>
-
-                <a href="{{ route('memorial-pages.qr.png', $memorialPage) }}"
-                   class="mt-6 inline-block rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">
-                    Download PNG
-                </a>
-            </div>
-        </div>
+        <h1 class="mt-4 font-serif text-2xl font-semibold tracking-tight text-nord-0">QR-kode til gravstedet</h1>
+        <p class="mt-1 max-w-prose text-sm text-nord-3">
+            Print kortet nedenfor og sæt det op ved gravstedet, så besøgende kan scanne koden
+            med deres mobilkamera og komme direkte til mindesiden — uden at skulle søge efter navnet.
+        </p>
     </div>
-</x-app-layout>
+
+    {{-- Printable card --}}
+    <div class="mx-auto mt-8 max-w-xs rounded-2xl border border-nord-4 bg-nord-6 p-8 text-center shadow-sm
+                print:mt-0 print:max-w-none print:rounded-none print:border-0 print:bg-white print:p-0 print:shadow-none">
+        <img src="{{ route('memorial-pages.qr.svg', $memorialPage) }}"
+             alt="QR-kode til {{ $memorialPage->full_name }}s mindeside"
+             class="mx-auto h-48 w-48 print:h-64 print:w-64">
+
+        <p class="mt-4 font-serif text-lg font-semibold text-nord-0 print:text-black">
+            {{ $memorialPage->full_name }}
+        </p>
+        @if ($memorialPage->lifespan)
+            <p class="text-sm text-nord-3 print:text-black">{{ $memorialPage->lifespan }}</p>
+        @endif
+
+        <p class="mt-3 text-xs uppercase tracking-widest text-nord-3 print:text-black">
+            Scan for at læse mindesiden
+        </p>
+        <p class="mt-1 break-all text-[11px] text-nord-3 print:text-black">{{ $url }}</p>
+    </div>
+
+    {{-- Actions --}}
+    <div class="mx-auto mt-6 flex max-w-xs items-center justify-center gap-3 print:hidden">
+        <button type="button" onclick="window.print()"
+                class="inline-flex items-center gap-1.5 rounded-full bg-nord-10 px-4 py-2 text-sm font-medium text-white transition hover:bg-nord-9">
+            <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M5 4a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v3h1a2 2 0 0 1 2 2v5a1 1 0 0 1-1 1h-2v1a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-1H3a1 1 0 0 1-1-1V9a2 2 0 0 1 2-2h1V4Zm2 9v3h6v-3H7Zm8-2a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" clip-rule="evenodd"/>
+            </svg>
+            Print
+        </button>
+        <a href="{{ route('memorial-pages.qr.png', $memorialPage) }}"
+           class="rounded-full border border-nord-4 bg-nord-6 px-4 py-2 text-sm font-medium text-nord-1 transition hover:bg-nord-5">
+            Download PNG
+        </a>
+    </div>
+</x-layouts.public>

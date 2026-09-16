@@ -1,105 +1,138 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ $memorialPage->full_name }}
-        </h2>
-    </x-slot>
+<x-layouts.public :title="$memorialPage->full_name" width="wide">
+    <div class="grid gap-8 lg:grid-cols-[280px_1fr]">
+        <aside class="lg:sticky lg:top-6 lg:self-start">
+            <div class="rounded-2xl border border-nord-4 bg-nord-6 p-5 text-center">
+                <x-avatar :name="$memorialPage->full_name" :src="$memorialPage->portrait_url" size="xl" class="mx-auto" />
 
-    <div class="py-12">
-        <div class="max-w-2xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 space-y-4">
-                @if ($memorialPage->birth_date || $memorialPage->death_date)
-                    <p class="text-gray-600">
-                        {{ $memorialPage->birth_date?->format('d/m/Y') }}
-                        &mdash;
-                        {{ $memorialPage->death_date?->format('d/m/Y') }}
+                <h1 class="mt-4 font-serif text-xl font-semibold tracking-tight text-nord-0">
+                    {{ $memorialPage->full_name }}
+                </h1>
+
+                @if ($memorialPage->lifespan)
+                    <p class="mt-1 text-sm text-nord-3">{{ $memorialPage->lifespan }}</p>
+                @endif
+
+                @if ($memorialPage->birth_place || $memorialPage->death_place)
+                    <p class="mt-1 text-xs text-nord-3">
+                        {{ $memorialPage->birth_place }}
+                        @if ($memorialPage->birth_place && $memorialPage->death_place) &rarr; @endif
+                        {{ $memorialPage->death_place }}
                     </p>
                 @endif
 
                 @if ($memorialPage->grave_location)
-                    <p class="text-gray-600">{{ $memorialPage->grave_location }}</p>
+                    <p class="mt-3 text-sm text-nord-2">{{ $memorialPage->grave_location }}</p>
                 @endif
-
-                @if ($memorialPage->life_story)
-                    <p class="whitespace-pre-line text-gray-800">{{ $memorialPage->life_story }}</p>
-                @endif
-            </div>
-
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
-                <h3 class="font-semibold text-gray-800">Minder</h3>
 
                 @auth
-                    <form method="POST" action="{{ route('memorial-pages.memories.store', $memorialPage) }}" class="mt-4">
+                    <div class="mt-4 flex flex-col gap-2">
+                        <a href="{{ route('memorial-pages.qr.show', $memorialPage) }}"
+                           class="rounded-full border border-nord-4 px-4 py-1.5 text-xs font-medium text-nord-2 transition hover:border-nord-10 hover:text-nord-10">
+                            QR-kode
+                        </a>
+                    </div>
+                @endauth
+            </div>
+
+            @if ($memorialPage->life_story)
+                <div class="mt-4 rounded-2xl border border-nord-4 bg-nord-6 p-5">
+                    <h2 class="font-serif text-sm font-semibold text-nord-0">Livshistorie</h2>
+                    <p class="mt-2 whitespace-pre-line text-sm text-nord-2">{{ $memorialPage->life_story }}</p>
+                </div>
+            @endif
+        </aside>
+
+        <div class="space-y-8">
+            <section>
+                <h2 class="font-serif text-lg font-semibold tracking-tight text-nord-0">Minder</h2>
+
+                @auth
+                    <form method="POST" action="{{ route('memorial-pages.memories.store', $memorialPage) }}"
+                          class="mt-4 rounded-2xl border border-nord-4 bg-nord-6 p-4">
                         @csrf
-                        <x-input-label for="title" value="Titel" />
-                        <x-text-input id="title" name="title" type="text" class="mt-1 block w-full" :value="old('title')" />
-                        <x-input-error :messages="$errors->get('title')" class="mt-2" />
+                        <label for="title" class="sr-only">Titel</label>
+                        <input type="text" name="title" id="title" maxlength="255" placeholder="Titel (valgfri)"
+                               value="{{ old('title') }}"
+                               class="block w-full rounded-lg border-nord-4 text-sm focus:border-nord-10 focus:ring-nord-10">
+                        <x-input-error :messages="$errors->get('title')" class="mt-1" />
 
-                        <x-input-label for="content" value="Minde" class="mt-4" />
-                        <textarea id="content" name="content" rows="4" required class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">{{ old('content') }}</textarea>
-                        <x-input-error :messages="$errors->get('content')" class="mt-2" />
+                        <label for="content" class="sr-only">Del et minde</label>
+                        <textarea name="content" id="content" rows="3" required placeholder="Del et minde…"
+                                  class="mt-2 block w-full rounded-lg border-nord-4 text-sm focus:border-nord-10 focus:ring-nord-10">{{ old('content') }}</textarea>
+                        <x-input-error :messages="$errors->get('content')" class="mt-1" />
 
-                        <x-primary-button class="mt-4">Del minde</x-primary-button>
+                        <button type="submit"
+                                class="mt-2 rounded-full bg-nord-10 px-4 py-1.5 text-sm font-medium text-white transition hover:bg-nord-9">
+                            Del minde
+                        </button>
                     </form>
                 @endauth
 
-                <div class="mt-6 space-y-4">
+                <div class="mt-4 space-y-4">
                     @forelse ($memories as $memory)
-                        <div class="border-t pt-4 first:border-t-0 first:pt-0">
-                            <a href="{{ route('memorial-pages.memories.show', [$memorialPage, $memory]) }}" class="block">
+                        <article class="rounded-2xl border border-nord-4 bg-nord-6 p-4">
+                            <div class="flex items-center gap-2 text-xs text-nord-3">
+                                <span class="font-medium text-nord-2">{{ $memory->user->name }}</span>
+                                <span>&middot;</span>
+                                <span>{{ $memory->created_at->format('d/m/Y') }}</span>
+                            </div>
+
+                            <a href="{{ route('memorial-pages.memories.show', [$memorialPage, $memory]) }}" class="mt-2 block">
                                 @if ($memory->title)
-                                    <h4 class="font-medium text-gray-800">{{ $memory->title }}</h4>
+                                    <h3 class="font-medium text-nord-0">{{ $memory->title }}</h3>
                                 @endif
-                                <p class="mt-1 text-sm text-gray-600">{{ $memory->content }}</p>
+                                <p class="mt-1 line-clamp-3 text-sm text-nord-2">{{ $memory->content }}</p>
                             </a>
-                            <p class="mt-1 text-xs text-gray-400">{{ $memory->user->name }} &middot; {{ $memory->created_at->format('d/m/Y') }}</p>
-                        </div>
+                        </article>
                     @empty
-                        <p class="text-sm text-gray-500">Der er endnu ikke delt nogen minder.</p>
+                        <p class="text-sm text-nord-3">Der er endnu ikke delt nogen minder.</p>
                     @endforelse
                 </div>
 
                 {{ $memories->links() }}
-            </div>
+            </section>
 
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
-                <h3 class="font-semibold text-gray-800">Billeder</h3>
+            <section>
+                <h2 class="font-serif text-lg font-semibold tracking-tight text-nord-0">Billeder</h2>
 
                 @auth
-                    <form method="POST" action="{{ route('memorial-pages.photos.store', $memorialPage) }}" enctype="multipart/form-data" class="mt-4">
+                    <form method="POST" action="{{ route('memorial-pages.photos.store', $memorialPage) }}" enctype="multipart/form-data"
+                          class="mt-4 rounded-2xl border border-nord-4 bg-nord-6 p-4">
                         @csrf
-                        <input type="file" name="photo" accept="image/*" required class="block w-full text-sm text-gray-600">
-                        <x-input-error :messages="$errors->get('photo')" class="mt-2" />
+                        <label for="photo" class="sr-only">Billede</label>
+                        <input type="file" name="photo" id="photo" accept="image/*" required
+                               class="block w-full text-sm text-nord-2 file:mr-3 file:rounded-full file:border-0 file:bg-nord-5 file:px-4 file:py-2 file:text-sm file:font-medium hover:file:bg-nord-4">
+                        <x-input-error :messages="$errors->get('photo')" class="mt-1" />
 
-                        <x-input-label for="caption" value="Billedtekst" class="mt-3" />
-                        <x-text-input id="caption" name="caption" type="text" class="mt-1 block w-full" :value="old('caption')" />
-                        <x-input-error :messages="$errors->get('caption')" class="mt-2" />
-
-                        <x-primary-button class="mt-4">Upload billede</x-primary-button>
+                        <button type="submit"
+                                class="mt-2 rounded-full bg-nord-10 px-4 py-1.5 text-sm font-medium text-white transition hover:bg-nord-9">
+                            Tilføj billede
+                        </button>
                     </form>
                 @endauth
 
-                <div class="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3">
+                <div class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
                     @forelse ($photos as $photo)
-                        <div class="group relative">
-                            <img src="{{ $photo->url }}" alt="{{ $photo->caption }}" class="aspect-square w-full rounded-lg object-cover">
+                        <div class="group relative aspect-square overflow-hidden rounded-xl border border-nord-4">
+                            <img src="{{ $photo->url }}" alt="{{ $photo->caption }}" class="h-full w-full object-cover">
 
                             @can('delete', $photo)
-                                <form method="POST" action="{{ route('photos.destroy', $photo) }}" class="absolute right-1 top-1"
-                                      onsubmit="return confirm('Slet dette billede?')">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="rounded-full bg-black/60 px-2 py-1 text-xs text-white">Slet</button>
-                                </form>
+                                <x-delete-form :action="route('photos.destroy', $photo)" confirm="Slet dette billede?"
+                                    form-class="absolute right-1.5 top-1.5 opacity-0 transition group-hover:opacity-100"
+                                    class="rounded-full bg-nord-0/60 p-1.5 text-white hover:bg-nord-11">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                </x-delete-form>
                             @endcan
                         </div>
                     @empty
-                        <p class="col-span-full text-sm text-gray-500">Der er endnu ikke delt nogen billeder.</p>
+                        <p class="col-span-full text-sm text-nord-3">Der er endnu ikke delt nogen billeder.</p>
                     @endforelse
                 </div>
 
                 {{ $photos->links() }}
-            </div>
+            </section>
         </div>
     </div>
-</x-app-layout>
+</x-layouts.public>
