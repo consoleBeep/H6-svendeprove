@@ -1,3 +1,34 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    /* @tailwindcss/forms makes all inputs white by default, override back to the theme */
+    [type='text'],
+    [type='email'],
+    [type='url'],
+    [type='password'],
+    [type='number'],
+    [type='date'],
+    [type='datetime-local'],
+    [type='month'],
+    [type='search'],
+    [type='tel'],
+    [type='time'],
+    [type='week'],
+    [multiple],
+    textarea,
+    select {
+        background-color: theme('colors.nord.6');
+        border-color: theme('colors.nord.4');
+    }
+}
+
+[x-cloak] {
+    display: none !important;
+}
+
+::selection {
+    background-color: #88c0d0; /* Nord frost */
+    color: #2e3440; /* Nord polar night */
+}
