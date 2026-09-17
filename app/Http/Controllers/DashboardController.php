@@ -11,8 +11,8 @@ class DashboardController extends Controller
     {
         $user = $request->user();
 
-        $ownPages = $user->memorialPages()->latest()->get();
-        $administeredPages = $user->administeredMemorialPages()->latest()->get();
+        $ownPages = $user->memorialPages()->withCount(['memories', 'photos'])->latest()->get();
+        $administeredPages = $user->administeredMemorialPages()->withCount(['memories', 'photos'])->latest()->get();
 
         return view('dashboard', [
             'ownPages' => $ownPages,
