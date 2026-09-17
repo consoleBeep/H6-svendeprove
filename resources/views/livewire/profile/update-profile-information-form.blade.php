@@ -3,13 +3,22 @@
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Livewire\Volt\Component;
+use Livewire\WithFileUploads;
 
 new class extends Component
 {
+    use WithFileUploads;
+
     public string $name = '';
     public string $email = '';
+
+    /**
+     * A newly picked avatar, staged until the form is saved.
+     */
+    public $avatar = null;
 
     /**
      * Mount the component.
@@ -30,15 +39,29 @@ new class extends Component
         $validated = $this->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($user->id)],
+            'avatar' => ['nullable', 'image', 'max:5120'],
         ]);
 
-        $user->fill($validated);
+        $user->fill([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+        ]);
 
         if ($user->isDirty('email')) {
             $user->email_verified_at = null;
         }
 
+        if ($this->avatar) {
+            if ($user->avatar_path) {
+                Storage::disk('public')->delete($user->avatar_path);
+            }
+
+            $user->avatar_path = $this->avatar->store('avatars', 'public');
+        }
+
         $user->save();
+
+        $this->avatar = null;
 
         $this->dispatch('profile-updated', name: $user->name);
     }
@@ -74,6 +97,23 @@ new class extends Component
     </header>
 
     <form wire:submit="updateProfileInformation" class="mt-6 space-y-6">
+        <div>
+            <label class="block text-sm font-medium text-nord-2">Profilbillede</label>
+            <div class="mt-1 flex items-center gap-4">
+                @if ($avatar)
+                    <img src="{{ $avatar->temporaryUrl() }}" alt="" class="h-24 w-24 rounded-full object-cover ring-1 ring-nord-0/10">
+                @else
+                    <x-avatar :name="$name" :src="auth()->user()->avatar_url" size="lg" />
+                @endif
+                <label class="cursor-pointer rounded-full border border-nord-4 bg-nord-6 px-3.5 py-2 text-sm font-medium text-nord-2 transition hover:bg-nord-5">
+                    <span wire:loading.remove wire:target="avatar">Skift billede</span>
+                    <span wire:loading wire:target="avatar">Uploader…</span>
+                    <input type="file" wire:model="avatar" accept="image/*" class="sr-only">
+                </label>
+            </div>
+            <x-input-error :messages="$errors->get('avatar')" class="mt-1" />
+        </div>
+
         <div>
             <x-input-label for="name" value="Navn" />
             <x-text-input wire:model="name" id="name" name="name" type="text" class="mt-1 block w-full" required autofocus autocomplete="name" />
