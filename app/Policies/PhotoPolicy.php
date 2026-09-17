@@ -9,6 +9,7 @@ class PhotoPolicy
 {
     public function delete(User $user, Photo $photo): bool
     {
-        return $user->id === $photo->user_id;
+        return $user->id === $photo->user_id
+            || $photo->memorialPage->isAdministeredBy($user);
     }
 }

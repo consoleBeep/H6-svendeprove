@@ -9,6 +9,7 @@ class CommentPolicy
 {
     public function delete(User $user, Comment $comment): bool
     {
-        return $user->id === $comment->user_id;
+        return $user->id === $comment->user_id
+            || $comment->memory->memorialPage->isAdministeredBy($user);
     }
 }
