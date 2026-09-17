@@ -24,14 +24,26 @@
                     <p class="mt-3 text-sm text-nord-2">{{ $memorialPage->grave_location }}</p>
                 @endif
 
-                @auth
-                    <div class="mt-4 flex flex-col gap-2">
-                        <a href="{{ route('memorial-pages.qr.show', $memorialPage) }}"
+                <div class="mt-4 flex flex-col gap-2">
+                    <a href="{{ route('memorial-pages.qr.show', $memorialPage) }}"
+                       class="rounded-full border border-nord-4 px-4 py-1.5 text-xs font-medium text-nord-2 transition hover:border-nord-10 hover:text-nord-10">
+                        QR-kode
+                    </a>
+
+                    @can('update', $memorialPage)
+                        <a href="{{ route('memorial-pages.edit', $memorialPage) }}"
                            class="rounded-full border border-nord-4 px-4 py-1.5 text-xs font-medium text-nord-2 transition hover:border-nord-10 hover:text-nord-10">
-                            QR-kode
+                            Rediger mindeside
                         </a>
-                    </div>
-                @endauth
+                    @endcan
+
+                    @can('delete', $memorialPage)
+                        <x-delete-form :action="route('memorial-pages.destroy', $memorialPage)" confirm="Slet mindesiden? Dette kan ikke fortrydes."
+                            class="rounded-full border border-nord-4 px-4 py-1.5 text-xs font-medium text-nord-11 transition hover:border-nord-11">
+                            Slet mindeside
+                        </x-delete-form>
+                    @endcan
+                </div>
             </div>
 
             @if ($memorialPage->life_story)
@@ -82,6 +94,11 @@
                                     <h3 class="font-medium text-nord-0">{{ $memory->title }}</h3>
                                 @endif
                                 <p class="mt-1 line-clamp-3 text-sm text-nord-2">{{ $memory->content }}</p>
+                            </a>
+
+                            <a href="{{ route('memorial-pages.memories.show', [$memorialPage, $memory]) }}"
+                               class="mt-2 inline-block text-xs text-nord-3 hover:text-nord-10">
+                                {{ $memory->comments_count }} {{ $memory->comments_count === 1 ? 'kommentar' : 'kommentarer' }}
                             </a>
                         </article>
                     @empty
