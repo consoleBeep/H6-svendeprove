@@ -27,6 +27,9 @@ Route::post('logout', function (Logout $logout) {
 Route::middleware('auth')->group(function () {
     Route::get('memorial-pages/create', [MemorialPageController::class, 'create'])->name('memorial-pages.create');
     Route::post('memorial-pages', [MemorialPageController::class, 'store'])->name('memorial-pages.store');
+    Route::get('memorial-pages/{memorialPage}/edit', [MemorialPageController::class, 'edit'])->name('memorial-pages.edit');
+    Route::put('memorial-pages/{memorialPage}', [MemorialPageController::class, 'update'])->name('memorial-pages.update');
+    Route::delete('memorial-pages/{memorialPage}', [MemorialPageController::class, 'destroy'])->name('memorial-pages.destroy');
 
     Route::post('memorial-pages/{memorialPage}/memories', [MemoryController::class, 'store'])->name('memorial-pages.memories.store');
 

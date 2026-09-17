@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Storage;
 
@@ -53,6 +54,12 @@ class MemorialPage extends Model
         });
     }
 
+    public function isAdministeredBy(?User $user): bool
+    {
+        return $user !== null
+            && ($user->id === $this->user_id || $this->admins->contains('id', $user->id));
+    }
+
     // raw LOWER()/LIKE so this behaves the same on sqlite (tests) and postgres (prod)
     public function scopeSearch(Builder $query, ?string $term): Builder
     {
@@ -68,6 +75,11 @@ class MemorialPage extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function admins(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class)->withTimestamps();
     }
 
     public function memories(): HasMany

@@ -12,7 +12,7 @@ class MemorialPageController extends Controller
 {
     public function show(MemorialPage $memorialPage): View
     {
-        $memorialPage->load('user');
+        $memorialPage->load(['user', 'admins']);
 
         $memories = $memorialPage->memories()
             ->withCount('comments')
@@ -45,6 +45,40 @@ class MemorialPageController extends Controller
         return redirect()
             ->route('memorial-pages.show', $memorialPage)
             ->with('status', 'Mindesiden er oprettet.');
+    }
+
+    public function edit(MemorialPage $memorialPage): View
+    {
+        $this->authorize('update', $memorialPage);
+
+        $memorialPage->load(['user', 'admins']);
+
+        return view('memorial-pages.edit', ['memorialPage' => $memorialPage]);
+    }
+
+    public function update(Request $request, MemorialPage $memorialPage): RedirectResponse
+    {
+        $this->authorize('update', $memorialPage);
+
+        $memorialPage->fill($this->validateData($request));
+        $this->syncProfilePhoto($request, $memorialPage);
+        $memorialPage->save();
+
+        return redirect()
+            ->route('memorial-pages.show', $memorialPage)
+            ->with('status', 'Mindesiden er opdateret.');
+    }
+
+    public function destroy(MemorialPage $memorialPage): RedirectResponse
+    {
+        $this->authorize('delete', $memorialPage);
+
+        $this->deleteProfilePhoto($memorialPage);
+        $memorialPage->delete();
+
+        return redirect()
+            ->route('home')
+            ->with('status', 'Mindesiden er slettet.');
     }
 
     private function validateData(Request $request): array
