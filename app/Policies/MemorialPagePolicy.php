@@ -16,4 +16,9 @@ class MemorialPagePolicy
     {
         return $user->id === $memorialPage->user_id;
     }
+
+    public function manageAdmins(User $user, MemorialPage $memorialPage): bool
+    {
+        return $user->id === $memorialPage->user_id;
+    }
 }
