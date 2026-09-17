@@ -30,6 +30,13 @@ class MemorialPageForm
                     ->disk('public')
                     ->directory('portraits')
                     ->columnSpanFull(),
+                Select::make('admins')
+                    ->label('Co-administrators')
+                    ->relationship('admins', 'name')
+                    ->multiple()
+                    ->searchable()
+                    ->preload()
+                    ->columnSpanFull(),
                 DatePicker::make('birth_date'),
                 TextInput::make('birth_place'),
                 DatePicker::make('death_date'),

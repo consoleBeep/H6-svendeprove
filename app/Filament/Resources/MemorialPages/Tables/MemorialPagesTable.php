@@ -24,6 +24,10 @@ class MemorialPagesTable
                 TextColumn::make('user.name')
                     ->label('Owner')
                     ->searchable(),
+                TextColumn::make('admins_count')
+                    ->label('Admins')
+                    ->counts('admins')
+                    ->toggleable(),
                 TextColumn::make('birth_date')
                     ->date()
                     ->sortable(),
