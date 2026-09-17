@@ -16,4 +16,10 @@
                class="text-sm text-nord-3 hover:text-nord-0">Annuller</a>
         </div>
     </form>
+
+    @can('manageAdmins', $memorialPage)
+        <div class="mt-8">
+            <livewire:memorial-page-admins :memorial-page="$memorialPage" />
+        </div>
+    @endcan
 </x-layouts.public>
