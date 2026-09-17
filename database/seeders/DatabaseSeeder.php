@@ -28,7 +28,7 @@ class DatabaseSeeder extends Seeder
 
         $visitors = User::factory(4)->create();
 
-        MemorialPage::factory(6)
+        $pages = MemorialPage::factory(6)
             ->recycle([$admin, $owner])
             ->create()
             ->each(function (MemorialPage $page) use ($visitors): void {
@@ -47,5 +47,7 @@ class DatabaseSeeder extends Seeder
                     ->for($page)
                     ->create(['user_id' => $page->user_id]);
             });
+
+        $pages->first()->admins()->attach($visitors->take(2));
     }
 }
