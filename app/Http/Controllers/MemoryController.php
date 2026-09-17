@@ -10,6 +10,7 @@ use Illuminate\View\View;
 
 class MemoryController extends Controller
 {
+    // {memory} is scoped to {memorialPage} in routes/web.php - mismatched pair 404s on its own
     public function show(MemorialPage $memorialPage, Memory $memory): View
     {
         $memory->load(['user', 'memorialPage']);
@@ -37,5 +38,40 @@ class MemoryController extends Controller
         return redirect()
             ->route('memorial-pages.memories.show', [$memorialPage, $memory])
             ->with('status', 'Mindet er offentliggjort.');
+    }
+
+    public function edit(MemorialPage $memorialPage, Memory $memory): View
+    {
+        $this->authorize('update', $memory);
+
+        return view('memories.edit', [
+            'memorialPage' => $memorialPage,
+            'memory' => $memory,
+        ]);
+    }
+
+    public function update(Request $request, MemorialPage $memorialPage, Memory $memory): RedirectResponse
+    {
+        $this->authorize('update', $memory);
+
+        $memory->update($request->validate([
+            'title' => ['nullable', 'string', 'max:255'],
+            'content' => ['required', 'string'],
+        ]));
+
+        return redirect()
+            ->route('memorial-pages.memories.show', [$memorialPage, $memory])
+            ->with('status', 'Mindet er opdateret.');
+    }
+
+    public function destroy(MemorialPage $memorialPage, Memory $memory): RedirectResponse
+    {
+        $this->authorize('delete', $memory);
+
+        $memory->delete();
+
+        return redirect()
+            ->route('memorial-pages.show', $memorialPage)
+            ->with('status', 'Mindet er slettet.');
     }
 }

@@ -32,6 +32,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('memorial-pages/{memorialPage}', [MemorialPageController::class, 'destroy'])->name('memorial-pages.destroy');
 
     Route::post('memorial-pages/{memorialPage}/memories', [MemoryController::class, 'store'])->name('memorial-pages.memories.store');
+    Route::get('memorial-pages/{memorialPage}/memories/{memory}/edit', [MemoryController::class, 'edit'])->name('memorial-pages.memories.edit')->scopeBindings();
+    Route::put('memorial-pages/{memorialPage}/memories/{memory}', [MemoryController::class, 'update'])->name('memorial-pages.memories.update')->scopeBindings();
+    Route::delete('memorial-pages/{memorialPage}/memories/{memory}', [MemoryController::class, 'destroy'])->name('memorial-pages.memories.destroy')->scopeBindings();
 
     Route::post('memories/{memory}/comments', [CommentController::class, 'store'])->name('memories.comments.store');
     Route::delete('comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');

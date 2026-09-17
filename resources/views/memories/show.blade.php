@@ -6,11 +6,26 @@
     </a>
 
     <article class="mt-4 rounded-2xl border border-nord-4 bg-nord-6 p-5 sm:p-6">
-        <div class="flex items-center gap-3">
-            <x-avatar :name="$memory->user->name" :src="$memory->user->avatar_url" size="md" />
-            <div class="min-w-0">
-                <p class="truncate text-sm font-medium text-nord-1">{{ $memory->user->name }}</p>
-                <p class="text-xs text-nord-3">{{ $memory->created_at->format('d.m.Y H:i') }}</p>
+        <div class="flex items-start justify-between gap-3">
+            <div class="flex min-w-0 items-center gap-3">
+                <x-avatar :name="$memory->user->name" :src="$memory->user->avatar_url" size="md" />
+                <div class="min-w-0">
+                    <p class="truncate text-sm font-medium text-nord-1">{{ $memory->user->name }}</p>
+                    <p class="text-xs text-nord-3">{{ $memory->created_at->format('d.m.Y H:i') }}</p>
+                </div>
+            </div>
+
+            <div class="flex shrink-0 items-center gap-2 text-sm">
+                @can('update', $memory)
+                    <a href="{{ route('memorial-pages.memories.edit', [$memorialPage, $memory]) }}"
+                       class="rounded-full border border-nord-4 px-3 py-1 font-medium transition hover:bg-nord-5">Rediger</a>
+                @endcan
+                @can('delete', $memory)
+                    <x-delete-form :action="route('memorial-pages.memories.destroy', [$memorialPage, $memory])" confirm="Slet mindet?"
+                        class="rounded-full px-3 py-1 font-medium text-nord-11 transition hover:bg-nord-11/10">
+                        Slet
+                    </x-delete-form>
+                @endcan
             </div>
         </div>
 
