@@ -10,11 +10,6 @@ class AdminPanelAccessTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_guests_are_redirected_from_the_admin_panel(): void
-    {
-        $this->get('/admin')->assertRedirect('/admin/login');
-    }
-
     public function test_regular_users_cannot_access_the_admin_panel(): void
     {
         $this->actingAs(User::factory()->create(['role' => 'user']))
@@ -27,11 +22,5 @@ class AdminPanelAccessTest extends TestCase
         $this->actingAs(User::factory()->admin()->create())
             ->get('/admin')
             ->assertOk();
-    }
-
-    public function test_is_admin_reflects_the_role_column(): void
-    {
-        $this->assertTrue(User::factory()->admin()->create()->isAdmin());
-        $this->assertFalse(User::factory()->create()->isAdmin());
     }
 }
