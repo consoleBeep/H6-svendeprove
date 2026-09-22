@@ -116,6 +116,11 @@
                             </div>
                         </div>
                     </div>
+                @else
+                    <a href="{{ route('login', ['redirect' => route('memorial-pages.show', $memorialPage, absolute: false)]) }}"
+                       class="mt-4 inline-block rounded-full bg-nord-10 px-4 py-1.5 text-sm font-medium text-white transition hover:bg-nord-9">
+                        Del minde
+                    </a>
                 @endauth
 
                 <div class="mt-4 space-y-4">
@@ -183,6 +188,11 @@
                             </div>
                         </div>
                     </div>
+                @else
+                    <a href="{{ route('login', ['redirect' => route('memorial-pages.show', $memorialPage, absolute: false)]) }}"
+                       class="mt-4 inline-block rounded-full bg-nord-10 px-4 py-1.5 text-sm font-medium text-white transition hover:bg-nord-9">
+                        Tilføj billede
+                    </a>
                 @endauth
 
                 <div class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
