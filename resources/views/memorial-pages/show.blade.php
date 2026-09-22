@@ -195,10 +195,12 @@
                     </a>
                 @endauth
 
-                <div class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
+                <div class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3" x-data="{ lightbox: null }">
                     @forelse ($photos as $photo)
                         <div class="group relative aspect-square overflow-hidden rounded-xl border border-nord-4">
-                            <img src="{{ $photo->url }}" alt="{{ $photo->caption }}" class="h-full w-full object-cover">
+                            <button type="button" @click="lightbox = '{{ $photo->url }}'" class="block h-full w-full">
+                                <img src="{{ $photo->url }}" alt="{{ $photo->caption }}" class="h-full w-full object-cover transition group-hover:opacity-90">
+                            </button>
 
                             @can('delete', $photo)
                                 <x-delete-form :action="route('photos.destroy', $photo)" confirm="Slet dette billede?"
@@ -213,6 +215,17 @@
                     @empty
                         <p class="col-span-full text-sm text-nord-3">Der er endnu ikke delt nogen billeder.</p>
                     @endforelse
+
+                    <div x-show="lightbox" x-cloak @keydown.escape.window="lightbox = null" @click="lightbox = null"
+                         class="fixed inset-0 z-50 flex items-center justify-center bg-nord-0/80 p-4">
+                        <img :src="lightbox" alt="" class="max-h-full max-w-full rounded-lg object-contain">
+                        <button type="button" @click="lightbox = null" aria-label="Luk"
+                                class="absolute right-4 top-4 rounded-full bg-nord-0/60 p-2 text-white hover:bg-nord-0/80">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
                 </div>
 
                 {{ $photos->links() }}
