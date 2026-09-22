@@ -41,6 +41,11 @@
                         <span class="hidden sm:inline">Opret mindeside</span>
                         <span class="sm:hidden">Opret</span>
                     </a>
+                @else
+                    <a href="{{ route('login') }}"
+                       class="rounded-full border border-nord-4 bg-nord-6 px-3.5 py-2 text-sm font-medium text-nord-1 transition hover:bg-nord-5">
+                        Log ind
+                    </a>
                 @endauth
 
                 {{-- Menu: same trigger + panel at every width --}}
