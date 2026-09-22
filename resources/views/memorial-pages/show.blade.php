@@ -12,16 +12,35 @@
                     <p class="mt-1 text-sm text-nord-3">{{ $memorialPage->lifespan }}</p>
                 @endif
 
-                @if ($memorialPage->birth_place || $memorialPage->death_place)
-                    <p class="mt-1 text-xs text-nord-3">
-                        {{ $memorialPage->birth_place }}
-                        @if ($memorialPage->birth_place && $memorialPage->death_place) &rarr; @endif
-                        {{ $memorialPage->death_place }}
-                    </p>
-                @endif
+                @if ($memorialPage->birth_date || $memorialPage->death_date || $memorialPage->grave_location)
+                    <div class="mt-4 space-y-1.5 rounded-xl border border-nord-4 bg-nord-5/60 p-3 text-left text-sm">
+                        @if ($memorialPage->birth_date)
+                            <p class="flex items-baseline justify-between gap-2">
+                                <span class="shrink-0 text-nord-3">Født:</span>
+                                <span class="text-right text-nord-1">
+                                    {{ $memorialPage->birth_date->format('d.m.Y') }}
+                                    @if ($memorialPage->birth_place) i {{ $memorialPage->birth_place }} @endif
+                                </span>
+                            </p>
+                        @endif
 
-                @if ($memorialPage->grave_location)
-                    <p class="mt-3 text-sm text-nord-2">{{ $memorialPage->grave_location }}</p>
+                        @if ($memorialPage->death_date)
+                            <p class="flex items-baseline justify-between gap-2">
+                                <span class="shrink-0 text-nord-3">Død:</span>
+                                <span class="text-right text-nord-1">
+                                    {{ $memorialPage->death_date->format('d.m.Y') }}
+                                    @if ($memorialPage->death_place) i {{ $memorialPage->death_place }} @endif
+                                </span>
+                            </p>
+                        @endif
+
+                        @if ($memorialPage->grave_location)
+                            <p class="flex items-baseline justify-between gap-2 border-t border-nord-4 pt-1.5">
+                                <span class="shrink-0 text-nord-3">Begravet:</span>
+                                <span class="text-right text-nord-1">{{ $memorialPage->grave_location }}</span>
+                            </p>
+                        @endif
+                    </div>
                 @endif
 
                 <div class="mt-4 flex flex-col gap-2">
@@ -59,25 +78,44 @@
                 <h2 class="font-serif text-lg font-semibold tracking-tight text-nord-0">Minder</h2>
 
                 @auth
-                    <form method="POST" action="{{ route('memorial-pages.memories.store', $memorialPage) }}"
-                          class="mt-4 rounded-2xl border border-nord-4 bg-nord-6 p-4">
-                        @csrf
-                        <label for="title" class="sr-only">Titel</label>
-                        <input type="text" name="title" id="title" maxlength="255" placeholder="Titel (valgfri)"
-                               value="{{ old('title') }}"
-                               class="block w-full rounded-lg border-nord-4 text-sm focus:border-nord-10 focus:ring-nord-10">
-                        <x-input-error :messages="$errors->get('title')" class="mt-1" />
-
-                        <label for="content" class="sr-only">Del et minde</label>
-                        <textarea name="content" id="content" rows="3" required placeholder="Del et minde…"
-                                  class="mt-2 block w-full rounded-lg border-nord-4 text-sm focus:border-nord-10 focus:ring-nord-10">{{ old('content') }}</textarea>
-                        <x-input-error :messages="$errors->get('content')" class="mt-1" />
-
-                        <button type="submit"
-                                class="mt-2 rounded-full bg-nord-10 px-4 py-1.5 text-sm font-medium text-white transition hover:bg-nord-9">
+                    <div x-data="{ open: {{ $errors->has('title') || $errors->has('content') ? 'true' : 'false' }} }">
+                        <button type="button" @click="open = true"
+                                class="mt-4 rounded-full bg-nord-10 px-4 py-1.5 text-sm font-medium text-white transition hover:bg-nord-9">
                             Del minde
                         </button>
-                    </form>
+
+                        <div x-show="open" x-cloak @keydown.escape.window="open = false"
+                             class="fixed inset-0 z-50 flex items-center justify-center bg-nord-0/50 p-4">
+                            <div @click.outside="open = false" class="w-full max-w-md rounded-2xl border border-nord-4 bg-nord-6 p-5">
+                                <h3 class="font-serif text-lg font-semibold text-nord-0">Del et minde</h3>
+
+                                <form method="POST" action="{{ route('memorial-pages.memories.store', $memorialPage) }}" class="mt-4">
+                                    @csrf
+                                    <label for="title" class="sr-only">Titel</label>
+                                    <input type="text" name="title" id="title" maxlength="255" placeholder="Titel (valgfri)"
+                                           value="{{ old('title') }}"
+                                           class="block w-full rounded-lg border-nord-4 text-sm focus:border-nord-10 focus:ring-nord-10">
+                                    <x-input-error :messages="$errors->get('title')" class="mt-1" />
+
+                                    <label for="content" class="sr-only">Del et minde</label>
+                                    <textarea name="content" id="content" rows="4" required placeholder="Del et minde…"
+                                              class="mt-2 block w-full rounded-lg border-nord-4 text-sm focus:border-nord-10 focus:ring-nord-10">{{ old('content') }}</textarea>
+                                    <x-input-error :messages="$errors->get('content')" class="mt-1" />
+
+                                    <div class="mt-3 flex items-center justify-end gap-2">
+                                        <button type="button" @click="open = false"
+                                                class="rounded-full border border-nord-4 px-4 py-1.5 text-sm font-medium text-nord-2 transition hover:bg-nord-5">
+                                            Annuller
+                                        </button>
+                                        <button type="submit"
+                                                class="rounded-full bg-nord-10 px-4 py-1.5 text-sm font-medium text-white transition hover:bg-nord-9">
+                                            Del minde
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 @endauth
 
                 <div class="mt-4 space-y-4">
@@ -113,19 +151,38 @@
                 <h2 class="font-serif text-lg font-semibold tracking-tight text-nord-0">Billeder</h2>
 
                 @auth
-                    <form method="POST" action="{{ route('memorial-pages.photos.store', $memorialPage) }}" enctype="multipart/form-data"
-                          class="mt-4 rounded-2xl border border-nord-4 bg-nord-6 p-4">
-                        @csrf
-                        <label for="photo" class="sr-only">Billede</label>
-                        <input type="file" name="photo" id="photo" accept="image/*" required
-                               class="block w-full text-sm text-nord-2 file:mr-3 file:rounded-full file:border-0 file:bg-nord-5 file:px-4 file:py-2 file:text-sm file:font-medium hover:file:bg-nord-4">
-                        <x-input-error :messages="$errors->get('photo')" class="mt-1" />
-
-                        <button type="submit"
-                                class="mt-2 rounded-full bg-nord-10 px-4 py-1.5 text-sm font-medium text-white transition hover:bg-nord-9">
+                    <div x-data="{ open: {{ $errors->has('photo') ? 'true' : 'false' }} }">
+                        <button type="button" @click="open = true"
+                                class="mt-4 rounded-full bg-nord-10 px-4 py-1.5 text-sm font-medium text-white transition hover:bg-nord-9">
                             Tilføj billede
                         </button>
-                    </form>
+
+                        <div x-show="open" x-cloak @keydown.escape.window="open = false"
+                             class="fixed inset-0 z-50 flex items-center justify-center bg-nord-0/50 p-4">
+                            <div @click.outside="open = false" class="w-full max-w-md rounded-2xl border border-nord-4 bg-nord-6 p-5">
+                                <h3 class="font-serif text-lg font-semibold text-nord-0">Tilføj billede</h3>
+
+                                <form method="POST" action="{{ route('memorial-pages.photos.store', $memorialPage) }}" enctype="multipart/form-data" class="mt-4">
+                                    @csrf
+                                    <label for="photo" class="sr-only">Billede</label>
+                                    <input type="file" name="photo" id="photo" accept="image/*" required
+                                           class="block w-full text-sm text-nord-2 file:mr-3 file:rounded-full file:border-0 file:bg-nord-5 file:px-4 file:py-2 file:text-sm file:font-medium hover:file:bg-nord-4">
+                                    <x-input-error :messages="$errors->get('photo')" class="mt-1" />
+
+                                    <div class="mt-3 flex items-center justify-end gap-2">
+                                        <button type="button" @click="open = false"
+                                                class="rounded-full border border-nord-4 px-4 py-1.5 text-sm font-medium text-nord-2 transition hover:bg-nord-5">
+                                            Annuller
+                                        </button>
+                                        <button type="submit"
+                                                class="rounded-full bg-nord-10 px-4 py-1.5 text-sm font-medium text-white transition hover:bg-nord-9">
+                                            Tilføj billede
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 @endauth
 
                 <div class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
