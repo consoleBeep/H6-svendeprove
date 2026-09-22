@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Mindeplatform') }}</title>
+        <title>{{ config('app.name', 'Mindesten') }}</title>
 
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700|fraunces:400,500,600&display=swap" rel="stylesheet" />
@@ -15,7 +15,7 @@
     <body class="font-sans text-nord-1 antialiased">
         <div class="flex min-h-screen flex-col items-center justify-center bg-nord-5 px-4 py-10">
             <a href="{{ route('home') }}" class="font-serif text-xl font-semibold tracking-tight text-nord-0">
-                Mindeplatform
+                Mindesten
             </a>
 
             <div class="mt-6 w-full overflow-hidden rounded-2xl border border-nord-4 bg-nord-6 px-6 py-6 shadow-sm sm:max-w-md">

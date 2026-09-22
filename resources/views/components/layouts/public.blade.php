@@ -15,7 +15,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ $title ? $title.' — Mindeplatform' : 'Mindeplatform' }}</title>
+    <title>{{ $title ? $title.' — Mindesten' : 'Mindesten' }}</title>
 
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700|fraunces:400,500,600&display=swap" rel="stylesheet" />
@@ -28,7 +28,7 @@
              x-data="{ menuOpen: false }" @keydown.escape.window="menuOpen = false">
         <div class="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-3.5 sm:py-4">
             <a href="{{ route('home') }}" class="font-serif text-xl font-semibold tracking-tight text-nord-0">
-                Mindeplatform
+                Mindesten
             </a>
 
             <div class="flex items-center gap-2">
@@ -105,7 +105,7 @@
     </main>
 
     <footer class="border-t border-nord-4 px-4 py-8 text-center text-xs text-nord-3">
-        Mindeplatform — et sted at gemme og dele livshistorier.
+        Mindesten — et sted at gemme og dele livshistorier.
     </footer>
 
     @livewireScripts
