@@ -37,8 +37,8 @@
                             <x-avatar :name="$page->full_name" :src="$page->portrait_url" size="lg" />
                             <h3 class="mt-3 line-clamp-2 w-full break-words font-serif text-lg font-semibold text-nord-0">{{ $page->full_name }}</h3>
                             <p class="mt-0.5 line-clamp-1 w-full break-words text-sm text-nord-3">{{ $page->lifespan }}</p>
-                            @if ($page->birth_place)
-                                <p class="line-clamp-1 w-full break-words text-xs text-nord-3">{{ $page->birth_place }}</p>
+                            @if ($page->grave_location)
+                                <p class="line-clamp-1 w-full break-words text-xs text-nord-3">{{ $page->grave_location }}</p>
                             @endif
                             <p class="mt-3 text-xs text-nord-3">
                                 {{ $page->memories_count }} minder · {{ $page->photos_count }} billeder
