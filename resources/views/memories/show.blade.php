@@ -1,8 +1,8 @@
 <x-layouts.public :title="$memory->title ?? ('Minde om '.$memorialPage->full_name)">
     <a href="{{ route('memorial-pages.show', $memorialPage) }}"
-       class="inline-flex items-center gap-1.5 text-sm font-medium text-nord-3 transition hover:text-nord-1">
-        <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 0 1 0 1.06L9.06 10l3.73 3.71a.75.75 0 1 1-1.06 1.06l-4.25-4.24a.75.75 0 0 1 0-1.06l4.25-4.24a.75.75 0 0 1 1.06 0Z" clip-rule="evenodd"/></svg>
-        {{ $memorialPage->full_name }}
+       class="inline-flex min-w-0 max-w-full items-center gap-1.5 text-sm font-medium text-nord-3 transition hover:text-nord-1">
+        <svg class="h-4 w-4 shrink-0" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 0 1 0 1.06L9.06 10l3.73 3.71a.75.75 0 1 1-1.06 1.06l-4.25-4.24a.75.75 0 0 1 0-1.06l4.25-4.24a.75.75 0 0 1 1.06 0Z" clip-rule="evenodd"/></svg>
+        <span class="min-w-0 truncate">{{ $memorialPage->full_name }}</span>
     </a>
 
     <article class="mt-4 rounded-2xl border border-nord-4 bg-nord-6 p-5 sm:p-6">
@@ -30,9 +30,9 @@
         </div>
 
         @if ($memory->title)
-            <h1 class="mt-4 font-serif text-2xl font-semibold text-nord-0">{{ $memory->title }}</h1>
+            <h1 class="mt-4 break-words font-serif text-2xl font-semibold text-nord-0">{{ $memory->title }}</h1>
         @endif
-        <div class="mt-3 whitespace-pre-line text-[15px] leading-relaxed text-nord-2">{{ $memory->content }}</div>
+        <div class="mt-3 whitespace-pre-line break-words text-[15px] leading-relaxed text-nord-2">{{ $memory->content }}</div>
     </article>
 
     {{-- Comments --}}
@@ -58,7 +58,7 @@
                                 </x-delete-form>
                             @endcan
                         </div>
-                        <p class="mt-1 whitespace-pre-line text-sm text-nord-2">{{ $comment->content }}</p>
+                        <p class="mt-1 whitespace-pre-line break-words text-sm text-nord-2">{{ $comment->content }}</p>
                     </div>
                 </li>
             @empty

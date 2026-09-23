@@ -31,14 +31,14 @@
         @else
             <ul class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 @foreach ($results as $page)
-                    <li>
+                    <li class="min-w-0">
                         <a href="{{ route('memorial-pages.show', $page) }}"
-                           class="flex h-full flex-col items-center rounded-2xl border border-nord-4 bg-nord-6 p-5 text-center shadow-sm transition hover:-translate-y-0.5 hover:border-nord-9 hover:shadow-md">
+                           class="flex h-full min-w-0 flex-col items-center rounded-2xl border border-nord-4 bg-nord-6 p-5 text-center shadow-sm transition hover:-translate-y-0.5 hover:border-nord-9 hover:shadow-md">
                             <x-avatar :name="$page->full_name" :src="$page->portrait_url" size="lg" />
-                            <h3 class="mt-3 font-serif text-lg font-semibold text-nord-0">{{ $page->full_name }}</h3>
-                            <p class="mt-0.5 text-sm text-nord-3">{{ $page->lifespan }}</p>
+                            <h3 class="mt-3 w-full break-words font-serif text-lg font-semibold text-nord-0">{{ $page->full_name }}</h3>
+                            <p class="mt-0.5 w-full break-words text-sm text-nord-3">{{ $page->lifespan }}</p>
                             @if ($page->birth_place)
-                                <p class="text-xs text-nord-3">{{ $page->birth_place }}</p>
+                                <p class="w-full break-words text-xs text-nord-3">{{ $page->birth_place }}</p>
                             @endif
                             <p class="mt-3 text-xs text-nord-3">
                                 {{ $page->memories_count }} minder · {{ $page->photos_count }} billeder

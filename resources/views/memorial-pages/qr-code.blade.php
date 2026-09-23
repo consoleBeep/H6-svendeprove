@@ -1,9 +1,9 @@
 <x-layouts.public :title="'QR-kode — '.$memorialPage->full_name">
     <div class="print:hidden">
         <a href="{{ route('memorial-pages.show', $memorialPage) }}"
-           class="inline-flex items-center gap-1.5 text-sm font-medium text-nord-3 transition hover:text-nord-1">
-            <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 0 1 0 1.06L9.06 10l3.73 3.71a.75.75 0 1 1-1.06 1.06l-4.25-4.24a.75.75 0 0 1 0-1.06l4.25-4.24a.75.75 0 0 1 1.06 0Z" clip-rule="evenodd"/></svg>
-            {{ $memorialPage->full_name }}
+           class="inline-flex min-w-0 max-w-full items-center gap-1.5 text-sm font-medium text-nord-3 transition hover:text-nord-1">
+            <svg class="h-4 w-4 shrink-0" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 0 1 0 1.06L9.06 10l3.73 3.71a.75.75 0 1 1-1.06 1.06l-4.25-4.24a.75.75 0 0 1 0-1.06l4.25-4.24a.75.75 0 0 1 1.06 0Z" clip-rule="evenodd"/></svg>
+            <span class="min-w-0 truncate">{{ $memorialPage->full_name }}</span>
         </a>
 
         <h1 class="mt-4 font-serif text-2xl font-semibold tracking-tight text-nord-0">QR-kode til gravstedet</h1>
@@ -20,7 +20,7 @@
              alt="QR-kode til {{ $memorialPage->full_name }}s mindeside"
              class="mx-auto h-48 w-48 print:h-64 print:w-64">
 
-        <p class="mt-4 font-serif text-lg font-semibold text-nord-0 print:text-black">
+        <p class="mt-4 break-words font-serif text-lg font-semibold text-nord-0 print:text-black">
             {{ $memorialPage->full_name }}
         </p>
         @if ($memorialPage->lifespan)

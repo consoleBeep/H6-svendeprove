@@ -50,7 +50,7 @@
                         </button>
                     </li>
                 @empty
-                    <li class="px-3 py-2 text-sm text-nord-3">Ingen brugere matcher "{{ $query }}".</li>
+                    <li class="break-words px-3 py-2 text-sm text-nord-3">Ingen brugere matcher "{{ $query }}".</li>
                 @endforelse
             </ul>
         @endif
