@@ -17,7 +17,7 @@
                         @if ($memorialPage->birth_date)
                             <p class="flex items-baseline justify-between gap-2">
                                 <span class="shrink-0 text-nord-3">Født:</span>
-                                <span class="break-words text-right text-nord-1">
+                                <span class="min-w-0 break-words text-right text-nord-1">
                                     {{ $memorialPage->birth_date->format('d.m.Y') }}
                                     @if ($memorialPage->birth_place) i {{ $memorialPage->birth_place }} @endif
                                 </span>
@@ -27,7 +27,7 @@
                         @if ($memorialPage->death_date)
                             <p class="flex items-baseline justify-between gap-2">
                                 <span class="shrink-0 text-nord-3">Død:</span>
-                                <span class="break-words text-right text-nord-1">
+                                <span class="min-w-0 break-words text-right text-nord-1">
                                     {{ $memorialPage->death_date->format('d.m.Y') }}
                                     @if ($memorialPage->death_place) i {{ $memorialPage->death_place }} @endif
                                 </span>
@@ -37,7 +37,7 @@
                         @if ($memorialPage->grave_location)
                             <p class="flex items-baseline justify-between gap-2 border-t border-nord-4 pt-1.5">
                                 <span class="shrink-0 text-nord-3">Begravet:</span>
-                                <span class="break-words text-right text-nord-1">{{ $memorialPage->grave_location }}</span>
+                                <span class="min-w-0 break-words text-right text-nord-1">{{ $memorialPage->grave_location }}</span>
                             </p>
                         @endif
                     </div>
