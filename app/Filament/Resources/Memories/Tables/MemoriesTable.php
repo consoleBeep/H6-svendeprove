@@ -16,11 +16,15 @@ class MemoriesTable
             ->columns([
                 TextColumn::make('memorialPage.full_name')
                     ->label('Memorial page')
-                    ->searchable(),
+                    ->searchable()
+                    ->limit(50)
+                    ->tooltip(fn (?string $state): ?string => $state),
                 TextColumn::make('user.name')
                     ->searchable(),
                 TextColumn::make('title')
-                    ->searchable(),
+                    ->searchable()
+                    ->limit(50)
+                    ->tooltip(fn (?string $state): ?string => $state),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

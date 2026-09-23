@@ -20,7 +20,9 @@ class MemorialPagesTable
                     ->circular()
                     ->disk('public'),
                 TextColumn::make('full_name')
-                    ->searchable(),
+                    ->searchable()
+                    ->limit(50)
+                    ->tooltip(fn (?string $state): ?string => $state),
                 TextColumn::make('user.name')
                     ->label('Owner')
                     ->searchable(),
@@ -32,13 +34,19 @@ class MemorialPagesTable
                     ->date()
                     ->sortable(),
                 TextColumn::make('birth_place')
+                    ->limit(30)
+                    ->tooltip(fn (?string $state): ?string => $state)
                     ->toggleable(),
                 TextColumn::make('death_date')
                     ->date()
                     ->sortable(),
                 TextColumn::make('death_place')
+                    ->limit(30)
+                    ->tooltip(fn (?string $state): ?string => $state)
                     ->toggleable(),
                 TextColumn::make('grave_location')
+                    ->limit(30)
+                    ->tooltip(fn (?string $state): ?string => $state)
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('created_at')
                     ->dateTime()
