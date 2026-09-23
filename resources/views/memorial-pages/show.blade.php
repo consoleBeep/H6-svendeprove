@@ -4,7 +4,7 @@
             <div class="rounded-2xl border border-nord-4 bg-nord-6 p-5 text-center">
                 <x-avatar :name="$memorialPage->full_name" :src="$memorialPage->portrait_url" size="xl" class="mx-auto" />
 
-                <h1 class="mt-4 font-serif text-xl font-semibold tracking-tight text-nord-0">
+                <h1 class="mt-4 break-words font-serif text-xl font-semibold tracking-tight text-nord-0">
                     {{ $memorialPage->full_name }}
                 </h1>
 
@@ -17,7 +17,7 @@
                         @if ($memorialPage->birth_date)
                             <p class="flex items-baseline justify-between gap-2">
                                 <span class="shrink-0 text-nord-3">Født:</span>
-                                <span class="text-right text-nord-1">
+                                <span class="break-words text-right text-nord-1">
                                     {{ $memorialPage->birth_date->format('d.m.Y') }}
                                     @if ($memorialPage->birth_place) i {{ $memorialPage->birth_place }} @endif
                                 </span>
@@ -27,7 +27,7 @@
                         @if ($memorialPage->death_date)
                             <p class="flex items-baseline justify-between gap-2">
                                 <span class="shrink-0 text-nord-3">Død:</span>
-                                <span class="text-right text-nord-1">
+                                <span class="break-words text-right text-nord-1">
                                     {{ $memorialPage->death_date->format('d.m.Y') }}
                                     @if ($memorialPage->death_place) i {{ $memorialPage->death_place }} @endif
                                 </span>
@@ -37,7 +37,7 @@
                         @if ($memorialPage->grave_location)
                             <p class="flex items-baseline justify-between gap-2 border-t border-nord-4 pt-1.5">
                                 <span class="shrink-0 text-nord-3">Begravet:</span>
-                                <span class="text-right text-nord-1">{{ $memorialPage->grave_location }}</span>
+                                <span class="break-words text-right text-nord-1">{{ $memorialPage->grave_location }}</span>
                             </p>
                         @endif
                     </div>
@@ -68,7 +68,7 @@
             @if ($memorialPage->life_story)
                 <div class="mt-4 rounded-2xl border border-nord-4 bg-nord-6 p-5">
                     <h2 class="font-serif text-sm font-semibold text-nord-0">Livshistorie</h2>
-                    <p class="mt-2 whitespace-pre-line text-sm text-nord-2">{{ $memorialPage->life_story }}</p>
+                    <p class="mt-2 whitespace-pre-line break-words text-sm text-nord-2">{{ $memorialPage->life_story }}</p>
                 </div>
             @endif
         </aside>
@@ -126,17 +126,17 @@
                 <div class="mt-4 space-y-4">
                     @forelse ($memories as $memory)
                         <article class="rounded-2xl border border-nord-4 bg-nord-6 p-4">
-                            <div class="flex items-center gap-2 text-xs text-nord-3">
-                                <span class="font-medium text-nord-2">{{ $memory->user->name }}</span>
-                                <span>&middot;</span>
-                                <span>{{ $memory->created_at->format('d/m/Y') }}</span>
+                            <div class="flex min-w-0 items-center gap-2 text-xs text-nord-3">
+                                <span class="min-w-0 truncate font-medium text-nord-2">{{ $memory->user->name }}</span>
+                                <span class="shrink-0">&middot;</span>
+                                <span class="shrink-0">{{ $memory->created_at->format('d/m/Y') }}</span>
                             </div>
 
                             <a href="{{ route('memorial-pages.memories.show', [$memorialPage, $memory]) }}" class="mt-2 block">
                                 @if ($memory->title)
-                                    <h3 class="font-medium text-nord-0">{{ $memory->title }}</h3>
+                                    <h3 class="break-words font-medium text-nord-0">{{ $memory->title }}</h3>
                                 @endif
-                                <p class="mt-1 line-clamp-3 text-sm text-nord-2">{{ $memory->content }}</p>
+                                <p class="mt-1 line-clamp-3 break-words text-sm text-nord-2">{{ $memory->content }}</p>
                             </a>
 
                             <a href="{{ route('memorial-pages.memories.show', [$memorialPage, $memory]) }}"
