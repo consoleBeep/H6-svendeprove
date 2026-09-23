@@ -55,6 +55,7 @@ jobs:
           key: ${{ secrets.DEPLOY_SSH_KEY }}
           script: |
             cd /var/www/mindesten
+            git checkout -- .scribe resources/views/scribe storage/app/scribe public/vendor/scribe
             git pull
             composer install --no-dev --optimize-autoloader
             npm ci
@@ -63,3 +64,4 @@ jobs:
             php artisan config:cache
             php artisan route:cache
             php artisan view:cache
+            php artisan scribe:generate
