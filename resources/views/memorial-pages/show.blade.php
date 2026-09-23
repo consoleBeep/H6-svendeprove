@@ -66,9 +66,33 @@
             </div>
 
             @if ($memorialPage->life_story)
-                <div class="mt-4 rounded-2xl border border-nord-4 bg-nord-6 p-5">
+                @php $lifeStoryIsLong = mb_strlen($memorialPage->life_story) > 300; @endphp
+                <div class="mt-4 rounded-2xl border border-nord-4 bg-nord-6 p-5" @if ($lifeStoryIsLong) x-data="{ open: false }" @endif>
                     <h2 class="font-serif text-sm font-semibold text-nord-0">Livshistorie</h2>
-                    <p class="mt-2 whitespace-pre-line break-words text-sm text-nord-2">{{ $memorialPage->life_story }}</p>
+                    <p class="mt-2 whitespace-pre-line break-words text-sm text-nord-2 @if ($lifeStoryIsLong) line-clamp-6 @endif">{{ $memorialPage->life_story }}</p>
+
+                    @if ($lifeStoryIsLong)
+                        <button type="button" @click="open = true"
+                                class="mt-2 text-xs font-medium text-nord-10 hover:text-nord-9">
+                            Læs mere
+                        </button>
+
+                        <div x-show="open" x-cloak @keydown.escape.window="open = false"
+                             class="fixed inset-0 z-50 flex items-center justify-center bg-nord-0/50 p-4">
+                            <div @click.outside="open = false" class="max-h-[80vh] w-full max-w-lg overflow-y-auto rounded-2xl border border-nord-4 bg-nord-6 p-5">
+                                <div class="flex items-start justify-between gap-4">
+                                    <h3 class="font-serif text-lg font-semibold text-nord-0">Livshistorie</h3>
+                                    <button type="button" @click="open = false" aria-label="Luk"
+                                            class="shrink-0 rounded-full p-1 text-nord-3 hover:bg-nord-5 hover:text-nord-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                        </svg>
+                                    </button>
+                                </div>
+                                <p class="mt-3 whitespace-pre-line break-words text-sm text-nord-2">{{ $memorialPage->life_story }}</p>
+                            </div>
+                        </div>
+                    @endif
                 </div>
             @endif
         </aside>
