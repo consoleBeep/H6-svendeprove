@@ -86,9 +86,9 @@ class MemorialPageController extends Controller
         return $request->validate([
             'full_name' => ['required', 'string', 'max:255'],
             'profile_photo' => ['nullable', 'image', 'max:5120'],
-            'birth_date' => ['nullable', 'date'],
+            'birth_date' => ['nullable', 'date', 'before_or_equal:today'],
             'birth_place' => ['nullable', 'string', 'max:255'],
-            'death_date' => ['nullable', 'date', 'after_or_equal:birth_date'],
+            'death_date' => ['nullable', 'date', 'after_or_equal:birth_date', 'before_or_equal:today'],
             'death_place' => ['nullable', 'string', 'max:255'],
             'grave_location' => ['nullable', 'string', 'max:255'],
             'life_story' => ['nullable', 'string'],
