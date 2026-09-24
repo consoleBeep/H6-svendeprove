@@ -1,0 +1,155 @@
+name: 'Memorial pages'
+description: |-
+
+  A read-only API for listing memorial pages and their memories.
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/memorial-pages
+    metadata:
+      custom: []
+      groupName: 'Memorial pages'
+      groupDescription: |-
+
+        A read-only API for listing memorial pages and their memories.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'List memorial pages'
+      description: 'Returns a paginated list of all memorial pages, ordered alphabetically by name.'
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"data":[{"id":2,"full_name":"Henriette Ebert I","birth_date":"1940-08-03","birth_place":"West Majorview","death_date":"1987-08-29","death_place":"Zboncakburgh","grave_location":"Vestre Kirkeg\u00e5rd, West Majorview","life_story":"Sed eos ut rem officia repellendus. Hic officiis corporis qui quo quaerat non hic.\n\nEveniet molestiae corrupti illum error consectetur. Quos reiciendis odio dolore ipsum. Facilis facere totam aspernatur voluptate autem et odio et. Odit autem est quisquam quis.\n\nQuibusdam suscipit ut ipsa est et. Qui architecto maxime natus ipsa dolores architecto qui. Ut vel repudiandae illo id. Sunt dolorem soluta quia debitis.","portrait_url":null,"url":"http:\/\/localhost:8000\/memorial-pages\/2"},{"id":1,"full_name":"Jakob Farrell","birth_date":"1932-08-10","birth_place":"Lake Isaiburgh","death_date":"1962-10-08","death_place":"Strosinview","grave_location":"\u00d8stre Kirkeg\u00e5rd, Lake Isaiburgh","life_story":"Esse velit impedit culpa alias nulla unde qui. Quo veritatis et tempora voluptas suscipit minus rerum. Dicta amet sed doloremque ut qui eum. Assumenda numquam error aut voluptatem voluptas impedit.\n\nMinima nam suscipit totam et. Eos voluptas qui velit deleniti non quam quisquam. Non maxime eligendi asperiores.\n\nRecusandae possimus doloremque cumque ut consequuntur qui. Rerum laborum deserunt quas quam. Sint eaque sint molestiae quidem veniam in accusantium. Commodi sunt veniam alias ad et.","portrait_url":null,"url":"http:\/\/localhost:8000\/memorial-pages\/1"},{"id":6,"full_name":"Mr. Michael Ondricka I","birth_date":"1959-08-29","birth_place":"Boscostad","death_date":"1974-10-19","death_place":"Port Mariane","grave_location":"Assistens Kirkeg\u00e5rd, Boscostad","life_story":"Sequi velit eos est fuga numquam doloremque corrupti. Iure cum sit alias et quasi. Et culpa unde aspernatur quo fuga autem. Dolor molestiae voluptate aut et aspernatur quos illo.\n\nRepellendus laboriosam et distinctio rerum accusantium omnis. Et et odit eum vel. Aperiam recusandae accusantium facere consectetur adipisci nulla. Eius autem asperiores repellat doloremque et accusamus. Sequi omnis maiores minima alias molestiae aliquid.\n\nPerferendis quod inventore voluptatem occaecati. Fugit animi occaecati totam nihil iste aut quos.","portrait_url":null,"url":"http:\/\/localhost:8000\/memorial-pages\/6"},{"id":5,"full_name":"Orie Jacobson III","birth_date":"1954-09-16","birth_place":"Beerburgh","death_date":"1978-06-23","death_place":"Haneton","grave_location":"\u00d8stre Kirkeg\u00e5rd, Beerburgh","life_story":"Ut ex qui neque nulla. Repellendus labore tempore ut ut doloribus fugiat voluptas. Aspernatur dolores laboriosam suscipit quia modi ut. Totam enim quae aliquam.\n\nEveniet veniam optio quis possimus quo a ex. Laudantium animi expedita voluptas architecto. Voluptas quasi sed est architecto sequi expedita saepe. Soluta doloribus et et nesciunt et eveniet earum.\n\nAut culpa ut possimus dignissimos beatae quaerat rem. Praesentium quia iste qui. Voluptas dolor eum qui praesentium architecto facere molestiae. Officiis suscipit consequatur voluptatem dolor.","portrait_url":null,"url":"http:\/\/localhost:8000\/memorial-pages\/5"},{"id":4,"full_name":"Shawn Eichmann","birth_date":"1968-09-06","birth_place":"New Whitneyton","death_date":"1983-07-15","death_place":"Lake Vita","grave_location":"Nordre Kirkeg\u00e5rd, New Whitneyton","life_story":"Enim amet recusandae ut cum odio esse id. Est porro voluptas sapiente autem. Et eum eligendi quia quo ea nostrum animi.\n\nEt voluptates nihil eveniet hic vel qui. In nesciunt quia numquam provident veniam beatae. Ipsum at et tempora voluptas laboriosam possimus. Consequatur dolor eum aut enim exercitationem adipisci.\n\nVoluptas sapiente dignissimos dolorum quis quia consequatur eos earum. Neque quod voluptas aut et quae voluptas. Quaerat et aut ducimus eum minima ipsa.","portrait_url":null,"url":"http:\/\/localhost:8000\/memorial-pages\/4"},{"id":3,"full_name":"Solon Swaniawski","birth_date":"1945-07-02","birth_place":"Dibbertview","death_date":"1984-01-12","death_place":"Hirtheburgh","grave_location":"Nordre Kirkeg\u00e5rd, Dibbertview","life_story":"Et veniam qui et suscipit illo sed rerum. Et inventore et magnam quae. Maiores provident non ex itaque possimus accusamus ipsa.\n\nConsequatur maiores mollitia voluptatem voluptatem eius et magni. Et excepturi ut officiis architecto odit iure esse. Cumque iusto pariatur qui sint rerum.\n\nVitae voluptatem dolore in non quaerat aut. Blanditiis tenetur repellat laboriosam eligendi dolores quia.","portrait_url":null,"url":"http:\/\/localhost:8000\/memorial-pages\/3"}],"links":{"first":"http:\/\/localhost:8000\/api\/memorial-pages?page=1","last":"http:\/\/localhost:8000\/api\/memorial-pages?page=1","prev":null,"next":null},"meta":{"current_page":1,"from":1,"last_page":1,"links":[{"url":null,"label":"&laquo; Previous","page":null,"active":false},{"url":"http:\/\/localhost:8000\/api\/memorial-pages?page=1","label":"1","page":1,"active":true},{"url":null,"label":"Next &raquo;","page":null,"active":false}],"path":"http:\/\/localhost:8000\/api\/memorial-pages","per_page":20,"to":6,"total":6}}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/memorial-pages/{memorialPage_id}'
+    metadata:
+      custom: []
+      groupName: 'Memorial pages'
+      groupDescription: |-
+
+        A read-only API for listing memorial pages and their memories.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Get a memorial page'
+      description: 'Returns the details of a single memorial page.'
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      memorialPage_id:
+        custom: []
+        name: memorialPage_id
+        description: 'The ID of the memorialPage.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      memorialPage_id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"data":{"id":1,"full_name":"Jakob Farrell","birth_date":"1932-08-10","birth_place":"Lake Isaiburgh","death_date":"1962-10-08","death_place":"Strosinview","grave_location":"\u00d8stre Kirkeg\u00e5rd, Lake Isaiburgh","life_story":"Esse velit impedit culpa alias nulla unde qui. Quo veritatis et tempora voluptas suscipit minus rerum. Dicta amet sed doloremque ut qui eum. Assumenda numquam error aut voluptatem voluptas impedit.\n\nMinima nam suscipit totam et. Eos voluptas qui velit deleniti non quam quisquam. Non maxime eligendi asperiores.\n\nRecusandae possimus doloremque cumque ut consequuntur qui. Rerum laborum deserunt quas quam. Sint eaque sint molestiae quidem veniam in accusantium. Commodi sunt veniam alias ad et.","portrait_url":null,"url":"http:\/\/localhost:8000\/memorial-pages\/1"}}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/memorial-pages/{memorialPage_id}/memories'
+    metadata:
+      custom: []
+      groupName: 'Memorial pages'
+      groupDescription: |-
+
+        A read-only API for listing memorial pages and their memories.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'List memories for a memorial page'
+      description: 'Returns a paginated list of memories shared on a memorial page, newest first.'
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      memorialPage_id:
+        custom: []
+        name: memorialPage_id
+        description: 'The ID of the memorialPage.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      memorialPage_id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"data":[{"id":1,"title":"Eos beatae eius in.","content":"Ab sint unde praesentium iste voluptates. Quo voluptatibus voluptate aperiam ut velit. Dolore eius beatae illum incidunt velit et. Eligendi rerum non velit quasi omnis.\n\nEos vero sit accusamus alias qui. Molestiae vel dolore quos in et itaque. Totam id laudantium mollitia sit assumenda non odit.","author":"Athena Rutherford","created_at":"2026-09-22T14:22:23+00:00"},{"id":2,"title":"Velit nesciunt atque in.","content":"Sit in aut saepe officia sit. Voluptatem molestiae suscipit placeat consequatur. Eum sit aperiam omnis eos quaerat nisi.\n\nPerferendis eius quis ipsum est placeat explicabo dolorem. Accusamus sit voluptatibus facilis eos optio. Vero assumenda et qui expedita temporibus ipsam labore numquam. Sed rem voluptas quo ea consequatur.","author":"Simeon Kuphal","created_at":"2026-09-22T14:22:23+00:00"},{"id":3,"title":"Earum veritatis rerum maxime.","content":"A voluptatibus et itaque quae eaque aut consequatur. Unde quod mollitia occaecati reprehenderit alias explicabo. Quia autem cumque autem consequatur minima.\n\nSapiente tenetur ea cum amet adipisci sint consequatur. Ut aut esse velit dolorem unde sit. Dolor exercitationem praesentium et temporibus.","author":"Athena Rutherford","created_at":"2026-09-22T14:22:23+00:00"}],"links":{"first":"http:\/\/localhost:8000\/api\/memorial-pages\/1\/memories?page=1","last":"http:\/\/localhost:8000\/api\/memorial-pages\/1\/memories?page=1","prev":null,"next":null},"meta":{"current_page":1,"from":1,"last_page":1,"links":[{"url":null,"label":"&laquo; Previous","page":null,"active":false},{"url":"http:\/\/localhost:8000\/api\/memorial-pages\/1\/memories?page=1","label":"1","page":1,"active":true},{"url":null,"label":"Next &raquo;","page":null,"active":false}],"path":"http:\/\/localhost:8000\/api\/memorial-pages\/1\/memories","per_page":20,"to":3,"total":3}}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
