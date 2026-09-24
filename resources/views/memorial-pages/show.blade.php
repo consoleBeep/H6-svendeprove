@@ -1,6 +1,6 @@
 <x-layouts.public :title="$memorialPage->full_name" width="wide">
     <div class="grid gap-8 lg:grid-cols-[280px_1fr]">
-        <aside class="lg:sticky lg:top-6 lg:self-start">
+        <aside class="min-w-0 lg:sticky lg:top-6 lg:self-start">
             <div class="rounded-2xl border border-nord-4 bg-nord-6 p-5 text-center">
                 <x-avatar :name="$memorialPage->full_name" :src="$memorialPage->portrait_url" size="xl" class="mx-auto" />
 
@@ -73,7 +73,7 @@
             @endif
         </aside>
 
-        <div class="space-y-8">
+        <div class="min-w-0 space-y-8">
             <section>
                 <h2 class="font-serif text-lg font-semibold tracking-tight text-nord-0">Minder</h2>
 

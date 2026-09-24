@@ -29,7 +29,7 @@
         @else
             <ul class="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
                 @foreach ($ownPages as $page)
-                    <li class="flex items-center gap-3 rounded-2xl border border-nord-4 bg-nord-6 p-4">
+                    <li class="flex min-w-0 items-center gap-3 rounded-2xl border border-nord-4 bg-nord-6 p-4">
                         <x-avatar :name="$page->full_name" :src="$page->portrait_url" />
                         <div class="min-w-0 flex-1">
                             <a href="{{ route('memorial-pages.show', $page) }}" class="truncate font-serif font-semibold text-nord-0 hover:underline">
@@ -58,7 +58,7 @@
 
             <ul class="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
                 @foreach ($administeredPages as $page)
-                    <li class="flex items-center gap-3 rounded-2xl border border-nord-4 bg-nord-6 p-4">
+                    <li class="flex min-w-0 items-center gap-3 rounded-2xl border border-nord-4 bg-nord-6 p-4">
                         <x-avatar :name="$page->full_name" :src="$page->portrait_url" />
                         <div class="min-w-0 flex-1">
                             <a href="{{ route('memorial-pages.show', $page) }}" class="truncate font-serif font-semibold text-nord-0 hover:underline">
